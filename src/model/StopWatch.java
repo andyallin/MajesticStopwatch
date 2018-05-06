@@ -13,9 +13,7 @@ public class StopWatch extends Frame implements ActionListener{
     private Button reset;
     private Label time;
 
-    private double start;
-    private double current;
-    private double temp;
+    private int seconds;
     private boolean button;
     private Timer timer;
 
@@ -33,9 +31,8 @@ public class StopWatch extends Frame implements ActionListener{
         button = false;
         setSize(350, 150);
         setVisible(true);
-        start=System.currentTimeMillis();
-        current = System.currentTimeMillis();
-        time.setText(0 + " ms");
+        seconds = 0;
+        time.setText(seconds + " seconds");
         timer=new Timer(1000, this);
         timer.setInitialDelay(1000);
         timer.setRepeats(false);
@@ -51,22 +48,13 @@ public class StopWatch extends Frame implements ActionListener{
             button = !button;
         if(e.getSource() == reset) {
             button = false;
-            start = current;
-            time.setText("0 ms");
+            seconds = 0;
+            time.setText(seconds + " seconds");
         }
-        else {
-            if (button) {
-                current = System.currentTimeMillis();
-                start += temp;
-                double elapsed = current - start;
-                temp = 0.0;
-                time.setText(elapsed + " ms");
-                timer.start();
-            }
-            if (!button) {
-                temp = System.currentTimeMillis()-current;
-                timer.start();
-            }
+        if (button) {
+            seconds++;
+            time.setText(seconds + " seconds");
+            timer.start();
         }
     }
 }
